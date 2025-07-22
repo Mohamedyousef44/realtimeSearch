@@ -3,15 +3,79 @@
 <head>
   <title>Realtime Search Analytics</title>
   <style>
-    body { font-family: sans-serif; margin: 2em; }
-    #analytics { margin-top: 2em; }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .center-container {
+      background: rgba(255,255,255,0.85);
+      padding: 2em 3em;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #search {
+      width: 300px;
+      padding: 0.75em 1em;
+      font-size: 1.2em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 1em;
+      outline: none;
+      transition: border 0.2s;
+    }
+    #search:focus {
+      border: 1.5px solid #007bff;
+    }
+    #show-analytics {
+      margin-bottom: 1.5em;
+      padding: 0.6em 1.5em;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #show-analytics:hover {
+      background: #0056b3;
+    }
+    #analytics {
+      width: 100%;
+      margin-top: 1em;
+    }
+    .analytics-list {
+      list-style: disc inside;
+      padding-left: 0;
+      margin: 0.5em 0 1.5em 0;
+      color: #222;
+      font-size: 1.1em;
+    }
+    .recent-list {
+      list-style: circle inside;
+      padding-left: 0;
+      color: #444;
+      font-size: 1em;
+    }
   </style>
 </head>
 <body>
-  <h1>Realtime Search</h1>
-  <input type="text" id="search" placeholder="Type to search..." autocomplete="off" />
-  <button id="show-analytics">Show Analytics</button>
-  <div id="analytics"></div>
+  <div class="center-container">
+    <h1>Realtime Search</h1>
+    <input type="text" id="search" placeholder="Type to search..." autocomplete="off" />
+    <button id="show-analytics">Show Analytics</button>
+    <div id="analytics"></div>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>

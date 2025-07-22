@@ -25,11 +25,11 @@ showAnalyticsBtn.addEventListener('click', function() {
     .then(data => {
       analyticsDiv.innerHTML = `
         <h2>Analytics</h2>
-        <ul>
+        <ul class="analytics-list">
           ${data.analytics.map(a => `<li>${a.query}: ${a.count}</li>`).join('')}
         </ul>
         <h3>Recent Searches</h3>
-        <ul>
+        <ul class="recent-list">
           ${data.recent.map(r => `<li>${r[0]} (${r[1]})</li>`).join('')}
         </ul>
       `;
