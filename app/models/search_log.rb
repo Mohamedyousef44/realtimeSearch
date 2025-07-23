@@ -1,2 +1,4 @@
 class SearchLog < ApplicationRecord
-end
+    validates :query, :session_id, :ip_address, presence: true
+  end
+  
