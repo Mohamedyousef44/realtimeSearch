@@ -1,30 +1,54 @@
 class SearchLogsController < ApplicationController
     skip_before_action :verify_authenticity_token
-    before_action :set_user
   
     # POST /search_logs
     def create
-      last_log = @user.search_logs.order(created_at: :desc).first
-      if params[:query].present? && params[:query].length > 3 &&
-         (last_log.nil? || last_log.query != params[:query])
-        @user.search_logs.create!(query: params[:query])
+        session_id = params[:session_id]
+        ip         = request.remote_ip
+        query      = params[:query].strip.downcase
+      
+        last_log = SearchLog.where(session_id: session_id, ip_address: ip).order(created_at: :desc).first
+      
+        if should_replace_last_log?(last_log, query)
+          last_log.update(query: query)
+        else
+          SearchLog.create!(session_id: session_id, ip_address: ip, query: query)
+        end
       end
-      render json: { message: "Log created" }
-    end
   
     # GET /search_logs
     def index
-      logs = @user.search_logs
-      analytics = logs.group(:query).order('count_id DESC').count(:id).map do |query, count|
-        { query: query, count: count }
+        ip = request.remote_ip
+      
+        # Get analytics (top 10 queries)
+        analytics = SearchLog
+                    .where(ip_address: ip)
+                    .group(:query)
+                    .order(Arel.sql('COUNT(id) DESC'))
+                    .limit(10)
+                    .count(:id)
+                    .map { |query, count| { query: query, count: count } }
+
+      
+        # Get last 10 queries
+        recent = SearchLog
+                   .where(ip_address: ip)
+                   .order(created_at: :desc)
+                   .limit(10)
+                   .pluck(:query, :created_at)
+                   .map { |query, time| { query: query, created_at: time } }
+      
+        render json: { analytics: analytics, recent: recent }
       end
-      render json: { analytics: analytics, recent: logs.order(created_at: :desc).limit(10).pluck(:query, :created_at) }
-    end
+      
   
     private
-  
-    def set_user
-      @user = User.find_or_create_by(ip: request.remote_ip)
+
+    def should_replace_last_log?(last_log, new_query)
+      return false if last_log.nil?
+      return false if new_query.blank?
+    
+      extended = new_query.start_with?(last_log.query)
     end
   end
   
