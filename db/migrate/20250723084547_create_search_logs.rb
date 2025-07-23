@@ -1,8 +1,9 @@
 class CreateSearchLogs < ActiveRecord::Migration[8.0]
   def change
     create_table :search_logs do |t|
-      t.references :user, null: false, foreign_key: true, type: :bigint
+      t.string :ip_address
       t.string :query
+      t.string :session_id
 
       t.timestamps
     end

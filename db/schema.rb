@@ -10,21 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_22_191413) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_23_084912) do
   create_table "search_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.string "ip_address"
     t.string "query"
+    t.string "session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_search_logs_on_user_id"
+    t.index ["ip_address"], name: "index_search_logs_on_ip_address"
+    t.index ["session_id"], name: "index_search_logs_on_session_id"
   end
-
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ip"], name: "index_users_on_ip", unique: true
-  end
-
-  add_foreign_key "search_logs", "users"
 end
