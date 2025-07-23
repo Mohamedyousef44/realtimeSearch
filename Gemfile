@@ -63,3 +63,5 @@ group :test do
 end
 
 gem 'mysql2', '>= 0.4.4'
+
+gem 'dotenv-rails'
