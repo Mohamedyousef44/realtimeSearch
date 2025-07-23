@@ -1,25 +1,35 @@
 const searchInput = document.getElementById('search');
 const analyticsDiv = document.getElementById('analytics');
 const showAnalyticsBtn = document.getElementById('show-analytics');
+
 let lastQuery = '';
 let debounceTimeout = null;
 
-searchInput.addEventListener('input', function() {
+// Generate a new session ID when the user first loads the page
+let sessionId = crypto.randomUUID();
+
+searchInput.addEventListener('input', function () {
   const query = searchInput.value;
   clearTimeout(debounceTimeout);
+
   debounceTimeout = setTimeout(() => {
     if (query.length > 3 && query !== lastQuery) {
       fetch('/search_logs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
+        body: JSON.stringify({ query, session_id: sessionId })
       });
       lastQuery = query;
+    }
+
+    if (query.trim() === '') {
+      sessionId = crypto.randomUUID(); // Start a new session
+      lastQuery = '';
     }
   }, 1000);
 });
 
-showAnalyticsBtn.addEventListener('click', function() {
+showAnalyticsBtn.addEventListener('click', function () {
   fetch('/search_logs')
     .then(res => res.json())
     .then(data => {
@@ -30,7 +40,7 @@ showAnalyticsBtn.addEventListener('click', function() {
         </ul>
         <h3>Recent Searches</h3>
         <ul class="recent-list">
-          ${data.recent.map(r => `<li>${r[0]} (${r[1]})</li>`).join('')}
+          ${data.recent.map(r => `<li>${r.query} (${r.created_at})</li>`).join('')}
         </ul>
       `;
     });
