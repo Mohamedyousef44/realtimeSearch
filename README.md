@@ -1,24 +1,43 @@
-# README
+# 🔎 Real Time Search Rails App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Ruby on Rails application logs user search queries, analyzes top searches, and displays recent ones based on IP and session ID.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## 📦 Requirements
 
-* System dependencies
+- **Ruby**: 3.2.x (check with `ruby -v`)
+- **Rails**: 7.x (check with `rails -v`)
+- **MYSql** (or SQLite3 for development)
 
-* Configuration
+---
 
-* Database creation
+## ⚙️ Setup Instructions
 
-* Database initialization
+### 1. Clone the Repository
 
-* How to run the test suite
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 
-* Services (job queues, cache servers, search engines, etc.)
+### 2. Install Dependencies
 
-* Deployment instructions
+```bash
+bundle install
 
-* ...
+
+### 3. Prepare your ENV file
+overide the .env-example with your database creds
+
+### 4. Setup the Database
+
+```bash
+rails db:create
+rails db:migrate
+
+### 5. Run the server
+
+```bash
+rails s
+
+
