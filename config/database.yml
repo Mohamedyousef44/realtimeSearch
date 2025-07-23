@@ -8,9 +8,11 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['MYSQL_USERNAME'] || "root" %>
-  password: <%= ENV['MYSQL_PASSWORD'] || "1234" %>
-  host: localhost
+  username: <%= ENV['MYSQL_USERNAME'] %>
+  password: <%= ENV['MYSQL_PASSWORD']%>
+  host: <%= ENV['MYSQL_HOST']%>
+  port: <%= ENV['MYSQL_PORT']%>
+  collation: utf8mb4_unicode_ci
 
 development:
   <<: *default
@@ -20,9 +22,10 @@ test:
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['MYSQL_USERNAME'] || "root" %>
-  password: <%= ENV['MYSQL_PASSWORD'] || "1234" %>
-  host: <%= ENV['MYSQL_HOST'] || "localhost" %>
-  port: <%= ENV['MYSQL_PORT'] || "3306" %>
+  username: <%= ENV['MYSQL_USERNAME'] %>
+  password: <%= ENV['MYSQL_PASSWORD']%>
+  host: <%= ENV['MYSQL_HOST']%>
+  port: <%= ENV['MYSQL_PORT']%>
   database: realtime_search_test
+  collation: utf8mb4_unicode_ci
 
