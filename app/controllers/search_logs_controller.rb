@@ -3,11 +3,13 @@ class SearchLogsController < ApplicationController
   
     # POST /search_logs
     def create
-      Rails.logger.info "Create query for IP is #{ip}"
+      
 
       session_id = params[:session_id].to_s.strip
       query = params[:query].to_s.strip.downcase
       ip = request.remote_ip
+
+      Rails.logger.info "Create query for IP is #{ip}"
   
       return head :bad_request if session_id.blank? || query.blank?
   
