@@ -13,7 +13,6 @@ default: &default
   host: <%= ENV['PG_HOST'] %>
   port: <%= ENV['PG_PORT'] %>
 
-
 development:
   <<: *default
   database: realtime_search_development
@@ -24,4 +23,9 @@ test:
 
 production:
   <<: *default
-  database: realtime_search_production
+  database: `'realtime_search_production' %>
+
+  cable:
+    <<: *default
+    database: `'realtime_search_production' %>
+
