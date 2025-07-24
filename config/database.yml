@@ -15,7 +15,6 @@ default: &default
   collation: utf8mb4_unicode_ci
 
 development:
-  <<: *default
   database: realtime_search_development
 
 test:
@@ -30,6 +29,7 @@ test:
   collation: utf8mb4_unicode_ci
 
 production:
+  <<: *default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
