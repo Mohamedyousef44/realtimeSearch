@@ -37,5 +37,5 @@ production:
   password: <%= ENV['MYSQL_PASSWORD']%>
   host: <%= ENV['MYSQL_HOST']%>
   port: <%= ENV['MYSQL_PORT']%>
-  database: realtime_search_test
+  database: realtime_search_production
   collation: utf8mb4_unicode_ci
