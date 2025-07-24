@@ -62,6 +62,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'mysql2', '>= 0.4.4'
+# gem 'mysql2', '>= 0.4.4'
+gem 'pg', '~> 1.5'
 
 gem 'dotenv-rails'
