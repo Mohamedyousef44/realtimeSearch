@@ -26,7 +26,6 @@ production:
   database: realtime_search_production
 
   cable:
-    cable:
     adapter: postgresql
     database: realtime_search_development
     username: <%= ENV['PG_USERNAME'] %>
