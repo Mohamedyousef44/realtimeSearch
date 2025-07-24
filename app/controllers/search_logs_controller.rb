@@ -7,7 +7,7 @@ class SearchLogsController < ApplicationController
 
       session_id = params[:session_id].to_s.strip
       query = params[:query].to_s.strip.downcase
-      ip = request.remote_ip
+      ip = extract_real_ip(request)
 
       Rails.logger.info "Create query for IP is #{ip}"
   
@@ -27,7 +27,7 @@ class SearchLogsController < ApplicationController
   
     # GET /search_logs
     def index
-      ip = request.remote_ip
+      ip = extract_real_ip(request)
   
       Rails.logger.info "ip is:  #{ip}"
       analytics = SearchLog
@@ -54,6 +54,16 @@ class SearchLogsController < ApplicationController
       return false if last_log.nil? || new_query.blank?
   
       new_query.start_with?(last_log.query)
+    end
+
+    private
+
+    def extract_real_ip(request)
+      if request.headers['X-Forwarded-For']
+        request.headers['X-Forwarded-For'].split(',').first.strip
+      else
+        request.remote_ip
+      end
     end
   end
   
